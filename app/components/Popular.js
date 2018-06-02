@@ -1,13 +1,14 @@
 var React = require("react");
 var PropTypes = require("prop-types");
 var api = require("../utils/api");
+var Loading = require("./Loading");
 
 function SelectLanguage(props) {
   var languages = ["All", "Javascript", "Ruby", "Java", "CSS", "Python"];
 
   return (
     <ul className="languages">
-      {languages.map(function(lang) {
+      {languages.map(function (lang) {
         return (
           <li
             style={
@@ -27,7 +28,7 @@ function SelectLanguage(props) {
 function RepoGrid(props) {
   return (
     <ul className="popular-list">
-      {props.repos.map(function(repo, index) {
+      {props.repos.map(function (repo, index) {
         return (
           <li key={repo.name} className="popular-item">
             <div className="popular-rank">#{index + 1}</div>
@@ -75,7 +76,7 @@ class Popular extends React.Component {
     this.updateLanguage(this.state.selectedLanguage);
   }
   updateLanguage(lang) {
-    this.setState(function() {
+    this.setState(function () {
       return {
         selectedLanguage: lang,
         repos: null
@@ -83,8 +84,8 @@ class Popular extends React.Component {
     });
 
     api.fetchPopularRepos(lang).then(
-      function(repos) {
-        this.setState(function() {
+      function (repos) {
+        this.setState(function () {
           return {
             repos: repos
           };
@@ -99,11 +100,10 @@ class Popular extends React.Component {
           selectedLanguage={this.state.selectedLanguage}
           onSelect={this.updateLanguage}
         />
-        {!this.state.repos ? (
-          <p>Loading</p>
-        ) : (
-          <RepoGrid repos={this.state.repos} />
-        )}
+        {!this.state.repos
+          ? <Loading />
+          : <RepoGrid repos={this.state.repos} />
+        }
       </div>
     );
   }

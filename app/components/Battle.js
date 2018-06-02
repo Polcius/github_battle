@@ -1,33 +1,8 @@
 var React = require('react');
 var PropTypes = require("prop-types");
 var Link = require('react-router-dom').Link;
+var PlayerPreview = require('./PlayerPreview');
 
-function PlayerPreview(props) {
-  return (
-    <div>
-      <div className='column'>
-        <img
-          src={props.avatar}
-          className='avatar'
-          alt={'Avatar for' + props.username}
-        />
-        <h2 className='username'>@{props.username}</h2>
-      </div>
-      <button
-        className='reset'
-        onClick={prop.onReset.bind(null, props.id)}>
-        Reset
-      </button>
-    </div>
-  )
-}
-
-PlayerPreview.propTypes = {
-  avatar: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  onReset: PropTypes.func.isRequired
-}
 
 class PlayerInput extends React.Component {
   constructor(props) {
@@ -49,7 +24,7 @@ class PlayerInput extends React.Component {
       return {
         username: value
       }
-    })
+    });
   }
 
   handleSubmit(event) {
@@ -58,7 +33,7 @@ class PlayerInput extends React.Component {
     this.props.onSubmit(
       this.props.id,
       this.state.username
-    )
+    );
   }
   render() {
     return (
@@ -92,6 +67,10 @@ PlayerInput.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
+PlayerInput.defaultProps = {
+  label: 'Username',
+}
+
 class Battle extends React.Component {
   constructor(props) {
     super(props);
@@ -101,16 +80,15 @@ class Battle extends React.Component {
       playerTwoName: '',
       playerOneImage: null,
       playerTwoImage: null
-    }
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReset = this.handleReset.bind(this);
   }
   handleSubmit(id, username) {
     this.setState(function () {
       var newState = {};
       newState[id + 'Name'] = username;
-      newState[id + 'Image'] = 'https://github.com' + username + '.png?size=200';
+      newState[id + 'Image'] = 'https://github.com/' + username + '.png?size=200';
       return newState;
     });
   }
@@ -145,9 +123,14 @@ class Battle extends React.Component {
             <PlayerPreview
               avatar={playerOneImage}
               username={playerOneName}
-              onReset={this.handleReset}
-              id='playerOne'
-            />}
+            >
+              <button
+                className='reset'
+                onClick={this.handleReset.bind(this, 'playerOne')}>
+                Reset
+            </button>
+
+            </PlayerPreview>}
 
           {!playerTwoName &&
             <PlayerInput
@@ -160,9 +143,14 @@ class Battle extends React.Component {
             <PlayerPreview
               avatar={playerTwoImage}
               username={playerTwoName}
-              onReset={this.handleReset}
-              id='playerTwo'
-            />}
+            >
+              <button
+                className='reset'
+                onClick={this.handleReset.bind(this, 'playerTwo')}>
+                Reset
+              </button>
+
+            </PlayerPreview>}
         </div>
 
         {playerOneImage && playerTwoImage &&
@@ -170,7 +158,7 @@ class Battle extends React.Component {
             className='button'
             to={{
               pathname: match.url + '/results',
-              search: `?playerOneName=` + playerOneName + '&playerTwoName=' + playerTwoName
+              search: '?playerOneName=' + playerOneName + '&playerTwoName=' + playerTwoName
             }}>
             Battle
           </Link>}
