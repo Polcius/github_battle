@@ -3,8 +3,15 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.langcontainer {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 a {
@@ -55,6 +62,12 @@ li {
 .languages {
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 375px) {
+  .languages {
+    flex-direction: column;
+  }
 }
 
 .languages li {
@@ -118,15 +131,25 @@ li {
   width: 80%;
 }
 
+@media (max-width: 425px) {
+  .column {
+    width: 40vw;
+    margin: 0 0.3rem;
+  }
+  .button {
+    width: 30vw;
+  }
+}
+
 .column label {
   text-align: center;
-  font-size: 30px;
+  font-size: 1.1rem;
   font-weight: 200;
 }
 
 .header {
   text-align: center;
-  font-size: 30px;
+  font-size: 2rem;
   font-weight: 200;
 }
 

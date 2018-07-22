@@ -96,7 +96,7 @@ class Battle extends React.Component {
     const { match } = this.props;
 
     return (
-      <div>
+      <div className="container">
         <div className='row'>
           {!playerOneName &&
             <PlayerInput
