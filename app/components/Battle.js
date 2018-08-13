@@ -21,7 +21,7 @@ class PlayerInput extends React.Component {
     username: ''
   }
 
-
+  //These are class methods
   handleChange = (event) => {
     const value = event.target.value;
 
@@ -38,6 +38,7 @@ class PlayerInput extends React.Component {
     );
   }
   render() {
+    //Destructuring state and props allows for clearer reading of the render method
     const { username } = this.state
     const { label } = this.props
     return (
@@ -76,14 +77,14 @@ class Battle extends React.Component {
       playerTwoImage: null
     }
 
-  
+  //Takes the 'id+Name' of the PlayerInput and displays their username and avatar (if found)
   handleSubmit = (id, username) => {
     this.setState(() => ({
       [id + 'Name']: username,
       [id + 'Image']: `https://github.com/${username}.png?size=200`
     })) 
   }
-
+  //Resets the fields and state to empty imputs
   handleReset = (id) => {
     this.setState(() => ({
       [id + 'Name']: '',
@@ -98,6 +99,7 @@ class Battle extends React.Component {
     return (
       <div className="container">
         <div className='row'>
+          
           {!playerOneName &&
             <PlayerInput
               id='playerOne'
@@ -138,7 +140,7 @@ class Battle extends React.Component {
 
             </PlayerPreview>}
         </div>
-
+            {/* If the two users have existing avatars, display a link to 'Battle' which calls the algorithms and then displays the result of said battle in the 'Results' component  */}
         {playerOneImage && playerTwoImage &&
           <Link
             className='button'

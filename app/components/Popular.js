@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { fetchPopularRepos } from '../utils/api';
 import Loading from './Loading';
 
+
+//Displays a list of languages. Marks the selected language with color, clicking it selects it.
 function SelectLanguage({ selectedLanguage, onSelect }) {
   const languages = ["All", "Javascript", "Ruby", "Java", "CSS", "Python"];
 
@@ -22,11 +24,11 @@ function SelectLanguage({ selectedLanguage, onSelect }) {
     </ul>
   )
 }
-
+//Displays a list of the most popular repositories by language. Gets { repos } as an argument, a repos object fetched from the custom API (../utils/api)
 function RepoGrid({ repos }) {
   return (
     <ul className="popular-list">
-       {repos.map(({ name, stargazers_count, owner, html_url }, index) => (
+      {repos.map(({ name, stargazers_count, owner, html_url }, index) => (
         <li key={name} className='popular-item'>
           <div className='popular-rank'>#{index + 1}</div>
           <ul className='space-list-items'>
@@ -36,13 +38,13 @@ function RepoGrid({ repos }) {
                 src={owner.avatar_url}
                 alt={'Avatar for ' + owner.login}
               />
-           </li>
+            </li>
             <li><a href={html_url}>{name}</a></li>
             <li>@{owner.login}</li>
             <li>{stargazers_count} stars</li>
           </ul>
         </li>
-     ))}
+      ))}
     </ul>
   )
 }
@@ -58,6 +60,7 @@ SelectLanguage.propTypes = {
 
 class Popular extends React.Component {
     state = {
+      //Starts with 'All' so the user sees the functionality upfront
       selectedLanguage: "All",
       repos: null
     }
@@ -67,11 +70,10 @@ class Popular extends React.Component {
   }
   updateLanguage = async (lang) => {
     this.setState(() => ({
-    
         selectedLanguage: lang,
         repos: null
     }));
-
+    
     const repos = await fetchPopularRepos(lang);
     this.setState(() => ({ repos }))
 

@@ -2,6 +2,8 @@ const id = "YOUR_CLIENT_ID";
 const sec = "YOUR_SECRET_ID";
 const params = `?client_id=${id}&client_secret=${sec}`;
 
+//Utility functions to fetch data from the GitHub API and display it later in the components
+
 async function getProfile (username) {
   const response = await fetch(`https://api.github.com/users/${username}${params}`)
   
@@ -17,7 +19,7 @@ async function getRepos (username) {
 function getStarCount (repos) {
   return repos.reduce((count, { stargazers_count }) => count +stargazers_count, 0);
 }
-
+//Random algorithm, multiplies followers by 3
 function calculateScore ({ followers }, repos) {
   return (followers * 3) + getStarCount(repos);
 }
@@ -40,6 +42,7 @@ async function getUserData (player) {
 }
 
 function sortPlayers (players) {
+  //Ascending sort
   return players.sort((a,b) => b.score - a.score);
 }
 
@@ -51,7 +54,7 @@ export async function battle (players) {
   ? results
   : sortPlayers(results);
 }
-
+//Fetches GitHub repositories sorted by star count. Takes language as a variable (defined in Popular.js component)
 export async function fetchPopularRepos(language) {
   const encodedURI = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`);
 

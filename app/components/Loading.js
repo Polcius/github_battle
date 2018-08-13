@@ -28,6 +28,7 @@ class Loading extends React.Component {
     const { text, speed } = this.props;
     const stopper = text + '...';
 
+    //Display 'Loading' + adding a dot every ${speed} milliseconds until it reaches 3 dots, then it starts again
     this.interval = window.setInterval(() => {
       this.state.text === stopper
       ? this.setState(() => ({text: this.props.text}))
@@ -36,6 +37,7 @@ class Loading extends React.Component {
   }
 
   componentWillUnmount() {
+    //Clearing the interval on Component Unmount to prevent a memory leak
     window.clearInterval(this.interval);
   }
 

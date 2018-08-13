@@ -52,6 +52,7 @@ class Results extends React.Component {
     }
 
   async componentDidMount() {
+    //Parses the names from the address bar
     const { playerOneName, playerTwoName } = queryString.parse(this.props.location.search);
 
     const players = await battle([
@@ -65,7 +66,7 @@ class Results extends React.Component {
           loading: false
       }))
     }
-
+    // The winner is the first one because they get sorted with the algorithm (../utils/api)
     this.setState(() => ({
         error: null,
         winner: players[0],
